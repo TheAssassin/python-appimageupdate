@@ -4,7 +4,7 @@ python:
   - 3.6
 
 install:
-  - git clone https://github.com/AppImage/AppImageUpdate
+  - git clone --recursive https://github.com/AppImage/AppImageUpdate
   - pushd AppImageUpdate
   - mkdir build
   - cd build
