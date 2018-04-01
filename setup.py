@@ -3,7 +3,7 @@ from setuptools import setup, Extension
 appimageupdate_module = Extension(
     "_appimageupdate",
     sources=["appimageupdate/_appimageupdate.cpp"],
-    libraries=["appimageupdate", "boost_python-py35"],
+    libraries=["appimageupdate", "boost_python"],
     include_dirs=["/usr/include", "/usr/local/include"],
     library_dirs=["/usr/lib", "/usr/lib/x86_64", "/usr/local/lib", "/usr/local/lib/x86_64"],
 )
