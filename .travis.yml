@@ -1,0 +1,18 @@
+sudo: required
+language: python
+python:
+  - 3.6
+
+install:
+  - git clone https://github.com/AppImage/AppImageUpdate
+  - pushd AppImageUpdate
+  - mkdir build
+  - cd build
+  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+  - make -j$(nproc)
+  - sudo make install
+  - popd
+
+script:
+  - python setup.py develop
+  - py.test
