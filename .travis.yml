@@ -3,6 +3,9 @@ language: python
 python:
   - 3.6
 
+before_install:
+  - sudo apt-get install -y libboost-python-dev
+
 install:
   - git clone --recursive https://github.com/AppImage/AppImageUpdate
   - pushd AppImageUpdate
