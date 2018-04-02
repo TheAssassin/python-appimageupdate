@@ -21,5 +21,6 @@ script:
   - bash Miniconda3-latest-Linux-x86_64.sh -b -p conda-env/usr -f
   - . conda-env/usr/bin/activate
   - conda install -y -c statiskit libboost_python-dev libboost_python
+  - env | grep CONDA
   - python setup.py develop
   - py.test tests/
