@@ -28,10 +28,11 @@ pushd "$BUILD_DIR"
 
 # installing boost::python from source is annoying
 # therefore using a miniconda environment for testing
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh -b -p conda-env/usr -f
+wget https://repo.continuum.io/miniconda/Miniconda3-4.3.11-Linux-x86_64.sh
+bash Miniconda3*-Linux-x86_64.sh -b -p conda-env/usr -f
 
 . conda-env/usr/bin/activate
+python --version
 
 # build AppImageUpdate and install it into conda prefix
 git clone --recursive https://github.com/AppImage/AppImageUpdate
