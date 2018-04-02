@@ -33,9 +33,21 @@ bash Miniconda3-latest-Linux-x86_64.sh -b -p conda-env/usr -f
 
 . conda-env/usr/bin/activate
 
+# build AppImageUpdate and install it into conda prefix
+pushd /tmp
+git clone --recursive https://github.com/AppImage/AppImageUpdate
+pushd AppImageUpdate
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX="$CONDA_PREFIX"/ -DBUILD_QT_UI=OFF
+make -j$(nproc)
+make install
+popd
+popd
+
 conda install -y -c statiskit libboost_python-dev libboost_python
 
-env | grep CONDA
-
 python "$REPO_ROOT"/setup.py develop
+
+pip install pytest
 py.test "$REPO_ROOT"/tests/

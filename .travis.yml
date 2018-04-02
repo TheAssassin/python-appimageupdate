@@ -1,18 +1,5 @@
 sudo: required
 language: generic
 
-install:
-  # build AppImageUpdate outside the build directory
-  - pushd /tmp
-  - git clone --recursive https://github.com/AppImage/AppImageUpdate
-  - pushd AppImageUpdate
-  - mkdir build
-  - cd build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_QT_UI=OFF
-  - make -j$(nproc)
-  - sudo make install
-  - popd
-  - popd
-
 script:
   - bash -xe travis/travis-build.sh
