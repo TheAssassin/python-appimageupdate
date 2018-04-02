@@ -17,7 +17,7 @@ if "CONDA_PREFIX" in os.environ:
 appimageupdate_module = Extension(
     "_appimageupdate",
     sources=[
-        "appimageupdate/_appimageupdate.cpp"
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "appimageupdate/_appimageupdate.cpp")),
     ],
     libraries=[
         "appimageupdate",
