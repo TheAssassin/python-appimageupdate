@@ -48,6 +48,10 @@ conda install -y -c statiskit libboost_python-dev libboost_python
 
 pushd "$REPO_ROOT"
 python setup.py develop
+ldd "$CONDA_PREFIX"/lib/libboost_python3*.so*
+env | grep LD
+export LD_LIBRARY_PATH="$CONDA_PREFIX"/lib
+ldd "$CONDA_PREFIX"/lib/libboost_python3*.so*
 pip install pytest
 py.test tests/
 popd
