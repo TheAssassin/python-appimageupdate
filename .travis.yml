@@ -7,6 +7,8 @@ before_install:
   - sudo apt-get install -y libboost-python-dev
 
 install:
+  # build AppImageUpdate outside the build directory
+  - pushd /tmp
   - git clone --recursive https://github.com/AppImage/AppImageUpdate
   - pushd AppImageUpdate
   - mkdir build
@@ -15,7 +17,8 @@ install:
   - make -j$(nproc)
   - sudo make install
   - popd
+  - popd
 
 script:
   - python setup.py develop
-  - py.test
+  - py.test tests/
