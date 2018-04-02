@@ -9,9 +9,11 @@ if sys.version_info[0] != 3:
 
 
 prefix = "/usr"
+boost_lib = "boost_python-py35"
 
 if "CONDA_PREFIX" in os.environ:
     prefix = os.environ["CONDA_PREFIX"]
+    boost_lib = "boost_python3"
     print("Conda environment detected, using {} as prefix".format(prefix))
 
 
@@ -22,7 +24,7 @@ appimageupdate_module = Extension(
     ],
     libraries=[
         "appimageupdate",
-        "boost_python-py35"
+        boost_lib
     ],
     include_dirs=[
         os.path.join(prefix, "include"),
