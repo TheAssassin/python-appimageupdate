@@ -1,7 +1,5 @@
 sudo: required
-language: python
-python:
-  - 3.6
+language: generic
 
 before_install:
   - sudo apt-get install -y libboost-python-dev
@@ -18,6 +16,14 @@ install:
   - sudo make install
   - popd
   - popd
+
+before_script:
+  # installing boost::python from source is annoying
+  # therefore using a miniconda environment for testing
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  - bash Miniconda3-latest-Linux-x86_64.sh -b -p conda-env/usr -f
+  - . conda-env/usr/bin/activate
+  - conda install -c anaconda boost
 
 script:
   - python setup.py develop
