@@ -20,7 +20,7 @@ before_script:
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
   - bash Miniconda3-latest-Linux-x86_64.sh -b -p conda-env/usr -f
   - . conda-env/usr/bin/activate
-  - conda install -c meznom boost-python
+  - conda install -y -c meznom boost-python
 
 script:
   - python setup.py develop
