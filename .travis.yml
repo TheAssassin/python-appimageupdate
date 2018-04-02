@@ -1,9 +1,6 @@
 sudo: required
 language: generic
 
-before_install:
-  - sudo apt-get install -y libboost-python-dev
-
 install:
   # build AppImageUpdate outside the build directory
   - pushd /tmp
