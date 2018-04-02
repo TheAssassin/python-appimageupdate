@@ -1,5 +1,7 @@
 # AppImageUpdate Python bindings
 
+![build status](https://travis-ci.org/TheAssassin/python-appimageupdate.svg?branch=master)
+
 This library provides a Python wrapper for libappimageupdate.
 
 It was written in C++ using
