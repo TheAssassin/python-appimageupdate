@@ -44,4 +44,5 @@ setup(
     description="Python to libappimageupdate bridge.",
     ext_modules=[appimageupdate_module],
     tests_require=["pytest"],
+    packages=["appimageupdate"],
 )

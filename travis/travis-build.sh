@@ -45,7 +45,9 @@ popd
 
 conda install -y -c statiskit libboost_python-dev libboost_python
 
-python "$REPO_ROOT"/setup.py develop
+pushd "$REPO_ROOT"
+python setup.py develop
+popd
 
 pip install pytest
 py.test "$REPO_ROOT"/tests/
