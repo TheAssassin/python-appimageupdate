@@ -12,6 +12,7 @@ prefix = "/usr"
 
 if "CONDA_PREFIX" in os.environ:
     prefix = os.environ["CONDA_PREFIX"]
+    print("Conda environment detected, using {} as prefix".format(prefix))
 
 
 appimageupdate_module = Extension(
@@ -24,14 +25,14 @@ appimageupdate_module = Extension(
         "boost_python-py35"
     ],
     include_dirs=[
-        os.path.join(prefix, "/include"),
-        os.path.join(prefix, "/local/include"),
+        os.path.join(prefix, "include"),
+        os.path.join(prefix, "local/include"),
     ],
     library_dirs=[
-        os.path.join(prefix, "/lib"),
-        os.path.join(prefix, "/lib/x86_64"),
-        os.path.join(prefix, "/local/lib"),
-        os.path.join(prefix, "/local/lib/x86_64"),
+        os.path.join(prefix, "lib"),
+        os.path.join(prefix, "lib/x86_64"),
+        os.path.join(prefix, "local/lib"),
+        os.path.join(prefix, "local/lib/x86_64"),
     ],
 )
 
