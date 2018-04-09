@@ -98,7 +98,7 @@ class Updater:
         if ptr == ffi.NULL:
             raise AppImageUpdateError("Updater__pathToNewFile")
 
-        rv = ffi.string(ptr)
+        rv = ffi.string(ptr).decode()
 
         lib.free(ptr)
 
