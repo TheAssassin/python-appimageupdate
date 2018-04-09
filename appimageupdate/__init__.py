@@ -26,6 +26,10 @@ class Updater:
         buffer = ffi.new("char[]", path_to_appimage.encode())
         self._updater = lib.Updater__create(buffer)
 
+    def __del__(self):
+        # clean up Updater instance
+        lib.Updater__delete(self._updater)
+
     def check_for_changes(self, method=0):
         """
         Check whether an update is available.
@@ -80,7 +84,7 @@ class Updater:
 
         rv = ffi.string(ptr).decode()
 
-        lib.free(ptr)
+        ffi.gc(ptr, lib.free)
 
         return rv
 
@@ -100,7 +104,7 @@ class Updater:
 
         rv = ffi.string(ptr).decode()
 
-        lib.free(ptr)
+        ffi.gc(ptr, lib.free)
 
         return rv
 
@@ -157,7 +161,6 @@ class Updater:
 
         if not rv:
             raise AppImageUpdateError("Updater__stop")
-
 
     def progress(self):
         """
