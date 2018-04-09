@@ -45,7 +45,7 @@ make install
 popd
 
 pushd "$REPO_ROOT"
-python setup.py develop
+python setup.py develop --prefix="$CONDA_PREFIX"/
 pip install pytest
 py.test tests/
 popd
