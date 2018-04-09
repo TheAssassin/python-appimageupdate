@@ -81,8 +81,7 @@ def test_update_appimaged(appimaged_path, tmpdir):
     assert u.state() == UpdaterState.SUCCESS
 
     path_to_new_file = u.path_to_new_file()
-    assert path_to_new_file.startswith("appimaged-x86_64")
-    assert path_to_new_file.endswith(".AppImage")
+    assert path_to_new_file == os.path.join(test_dir, "appimaged-x86_64.AppImage")
 
 
 def test_update_echo(echo_path):
