@@ -1,6 +1,10 @@
 import enum
 
-from _appimageupdate import Updater as _Updater, AppImageUpdateError
+from _appimageupdate import ffi, lib
+
+
+class AppImageUpdateError(Exception):
+    pass
 
 
 class UpdaterState(enum.IntEnum):
@@ -19,7 +23,8 @@ class Updater:
     """
 
     def __init__(self, path_to_appimage):
-        self._updater = _Updater(path_to_appimage)
+        buffer = ffi.new("char[]", path_to_appimage.encode())
+        self._updater = lib.Updater__create(buffer)
 
     def check_for_changes(self, method=0):
         """
@@ -34,7 +39,12 @@ class Updater:
         :rtype: bool
         """
 
-        return self._updater.checkForChanges(method)
+        rv = lib.Updater__checkForChanges(self._updater, method)
+
+        if rv < 0:
+            raise AppImageUpdateError("Updater__checkForChanges")
+
+        return rv
 
     def start(self):
         """
@@ -44,12 +54,15 @@ class Updater:
 
         You can stop the update process with stop().
 
-        :return: True if successful, False if the update has been started
-            already.
-        :rtype: bool
+        Raises AppImageUpdateError if the update has been started already.
+
+        :raises: AppImageUpdateError
         """
 
-        return self._updater.start()
+        rv = lib.Updater__start(self._updater)
+
+        if not rv:
+            raise AppImageUpdateError("Updater__start")
 
     def describe_appimage(self):
         """
@@ -57,9 +70,39 @@ class Updater:
 
         :return: String containing information about the AppImage
         :rtype: str
+        :raises: AppImageUpdateError
         """
 
-        return self._updater.describeAppImage()
+        ptr = lib.Updater__describeAppImage(self._updater)
+
+        if ptr == ffi.NULL:
+            raise AppImageUpdateError("Updater__describeAppImage")
+
+        rv = ffi.string(ptr).decode()
+
+        lib.free(ptr)
+
+        return rv
+
+    def path_to_new_file(self):
+        """
+        Return path to updated AppImage.
+
+        :return: String containing information about the AppImage
+        :rtype: str
+        :raises: AppImageUpdateError
+        """
+
+        ptr = lib.Updater__pathToNewFile(self._updater)
+
+        if ptr == ffi.NULL:
+            raise AppImageUpdateError("Updater__pathToNewFile")
+
+        rv = ffi.string(ptr)
+
+        lib.free(ptr)
+
+        return rv
 
     def is_done(self):
         """
@@ -73,7 +116,7 @@ class Updater:
         :rtype: bool
         """
 
-        return self._updater.isDone()
+        return lib.Updater__isDone(self._updater)
 
     def has_error(self):
         """
@@ -84,7 +127,7 @@ class Updater:
         :return: True if an error has occured, False otherwise
         """
 
-        return self._updater.hasError()
+        return lib.Updater__hasError(self._updater)
 
     def state(self):
         """
@@ -94,7 +137,8 @@ class Updater:
         :rtype: UpdaterState
         """
 
-        return UpdaterState(self._updater.state())
+        state = lib.Updater__state(self._updater)
+        return UpdaterState(state)
 
     def stop(self):
         """
@@ -103,12 +147,17 @@ class Updater:
         Please beware this feature has most likely not been implemented in
         AppImageUpdate yet, causing this function to raise a RuntimeError.
 
-        :return: True when stopping worked, False otherwise
-        :rtype: bool
-        :raises: RuntimeError
+        Once it works, it should return None, and will raise
+        AppImageUpdateError if it fails.
+
+        :raises: RuntimeError, AppImageUpdateError
         """
 
-        return self._updater.stop()
+        rv = lib.Updater__stop(self._updater)
+
+        if not rv:
+            raise AppImageUpdateError("Updater__stop")
+
 
     def progress(self):
         """
@@ -118,4 +167,12 @@ class Updater:
         :rtype: double
         """
 
-        return self._updater.progress()
+        rv = lib.Updater__progress(self._updater)
+
+        if rv < 0:
+            raise AppImageUpdateError("Updater__progress")
+
+        return rv
+
+
+__ALL__ = (UpdaterState, Updater, AppImageUpdateError,)
