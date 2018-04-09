@@ -12,13 +12,20 @@ with open(os.path.join(src_dir, "_wrapper.h")) as f:
     ffi.cdef(f.read())
 
 
+extra_compile_args = []
+
+if "CONDA_PREFIX" in os.environ:
+    include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
+    extra_compile_args.append("-I{}".format(include_dir))
+
+
 with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
     ffi.set_source(
         "_appimageupdate",
         f.read(),
         source_extension='.cpp',
         libraries=["appimageupdate"],
-        extra_compile_args=["-std=c++11"]
+        extra_compile_args=["-std=c++11"] + extra_compile_args,
     )
 
 
