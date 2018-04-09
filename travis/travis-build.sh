@@ -39,7 +39,7 @@ git clone --recursive https://github.com/AppImage/AppImageUpdate
 pushd AppImageUpdate
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX="$CONDA_PREFIX"/ -DBUILD_QT_UI=OFF
+cmake .. -DCMAKE_INSTALL_PREFIX="$CONDA_PREFIX"/ -DBUILD_QT_UI=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo
 make -j$(nproc)
 make install
 popd
