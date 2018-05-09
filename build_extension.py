@@ -33,4 +33,4 @@ with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
 
 
 if __name__ == "__main__":
-    ffi.compile()
+    ffi.compile(verbose=True, debug=True)
