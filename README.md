@@ -5,8 +5,8 @@
 This library provides a Python wrapper for libappimageupdate.
 
 It was written in C++ using
-[boost::python](https://www.boost.org/doc/libs/1_66_0/libs/python/doc/html/),
-and provides an elegant, Pythonic API which Python applications can use.
+[cffi](https://cffi.readthedocs.io/en/latest/),
+and provides an elegant, Pythonic API which allows Python applications to access the libappimageupdate API.
 
 Please beware this is alpha quality software. There is a set of unit tests
 that cover most of the functionality. If you find bugs, please do not hesitate
