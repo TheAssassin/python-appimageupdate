@@ -18,6 +18,9 @@ if "CONDA_PREFIX" in os.environ:
     include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
     extra_compile_args.append("-I{}".format(include_dir))
 
+if "INCLUDE_DIRS" in os.environ:
+    extra_compile_args += ["-I{}".format(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
+
 
 with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
     ffi.set_source(
