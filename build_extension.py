@@ -21,7 +21,7 @@ extra_args = {
 
 if "CONDA_PREFIX" in os.environ:
     include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
-    extra_args["library_dirs"].append("-I{}".format(include_dir))
+    extra_args["library_dirs"].append(include_dir)
 
 if "INCLUDE_DIRS" in os.environ:
     extra_args["include_dirs"] += [os.path.abspath(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
