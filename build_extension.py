@@ -18,8 +18,13 @@ if "CONDA_PREFIX" in os.environ:
     include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
     extra_compile_args.append("-I{}".format(include_dir))
 
+extra_args = {}
+
 if "INCLUDE_DIRS" in os.environ:
-    extra_compile_args += ["-I{}".format(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
+    extra_args["include_dirs"] = [os.path.abspath(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
+
+if "LINK_DIRS" in os.environ:
+    extra_args["library_dirs"] = [os.path.abspath(i) for i in os.environ["LINK_DIRS"].split(":")]
 
 
 with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
@@ -28,7 +33,8 @@ with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
         f.read(),
         source_extension='.cpp',
         libraries=["appimageupdate"],
-        extra_compile_args=["-std=c++11"] + extra_compile_args,
+        extra_compile_args=["-std=c++11"],
+        **extra_args
     )
 
 
