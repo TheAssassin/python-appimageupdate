@@ -44,6 +44,8 @@ make -j$(nproc)
 make install
 popd
 
+env | grep PREFIX
+
 pushd "$REPO_ROOT"
 python setup.py develop --prefix="$CONDA_PREFIX"/
 pip install pytest
