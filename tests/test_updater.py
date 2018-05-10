@@ -122,6 +122,13 @@ def test_update_echo(echo_path):
 #    assert u.progress() == 0
 
 
+def test_path_to_new_file(echo_path):
+    u = Updater(echo_path)
+
+    with pytest.raises(AppImageUpdateError):
+        u.path_to_new_file()
+
+
 def test_update_appimaged_progress(appimaged_path, tmpdir):
     test_dir = tmpdir.mkdir("test_update_appimaged")
 
