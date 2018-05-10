@@ -14,17 +14,20 @@ with open(os.path.join(src_dir, "_wrapper.h")) as f:
 
 extra_compile_args = []
 
+extra_args = {
+    "include_dirs": [],
+    "library_dirs": [],
+}
+
 if "CONDA_PREFIX" in os.environ:
     include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
-    extra_compile_args.append("-I{}".format(include_dir))
-
-extra_args = {}
+    extra_args["library_dirs"].append("-I{}".format(include_dir))
 
 if "INCLUDE_DIRS" in os.environ:
-    extra_args["include_dirs"] = [os.path.abspath(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
+    extra_args["include_dirs"] += [os.path.abspath(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
 
 if "LINK_DIRS" in os.environ:
-    extra_args["library_dirs"] = [os.path.abspath(i) for i in os.environ["LINK_DIRS"].split(":")]
+    extra_args["library_dirs"] += [os.path.abspath(i) for i in os.environ["LINK_DIRS"].split(":")]
 
 
 with open(os.path.join(src_dir, "_wrapper.cpp")) as f:
