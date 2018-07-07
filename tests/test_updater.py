@@ -18,7 +18,7 @@ def echo_path(data_dir):
 
 @pytest.fixture
 def appimaged_path(data_dir):
-    return os.path.abspath(os.path.join(data_dir, "appimaged-i686.AppImage"))
+    return os.path.abspath(os.path.join(data_dir, "appimaged-x86_64.AppImage"))
 
 
 def test_init_echo(echo_path):
@@ -47,7 +47,7 @@ def test_describe_appimaged(appimaged_path):
     description = u.describe_appimage()
 
     assert "AppImage type: 2" in description
-    assert "Raw update information: gh-releases-zsync|AppImage|AppImageKit|continuous|appimaged-x86_64.AppImage.zsync" in description
+    assert "Raw update information: gh-releases-zsync|AppImage|appimaged|continuous|appimaged*x86_64*.AppImage.zsync" in description
     assert "Update information type: ZSync via GitHub Releases" in description
 
 
