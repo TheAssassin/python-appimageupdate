@@ -19,10 +19,21 @@ extra_args = {
     "library_dirs": [],
 }
 
-if "CONDA_PREFIX" in os.environ:
-    print("CONDA_PREFIX found in environment, including directories")
-    include_dir = os.path.join(os.environ["CONDA_PREFIX"], "include")
+
+def use_prefix(prefix):
+    include_dir = os.path.join(prefix, "include")
+    library_dir = os.path.join(prefix, "lib")
+    extra_args["library_dirs"].append(library_dir)
     extra_args["include_dirs"].append(include_dir)
+
+
+if "CONDA_PREFIX" in os.environ:
+    print("CONDA_PREFIX found in environment, using as prefix for build")
+    use_prefix(os.environ["CONDA_PREFIX"])
+
+elif "VIRTUAL_ENV" in os.environ:
+    print("VIRTUAL_ENV found in environment, using as prefix for build")
+    use_prefix(os.environ["VIRTUAL_ENV"])
 
 if "INCLUDE_DIRS" in os.environ:
     extra_args["include_dirs"] += [os.path.abspath(i) for i in os.environ["INCLUDE_DIRS"].split(":")]
